@@ -7,7 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import Image from "next/image"
-import logo from "@/assets/logo-without-bg.png"
+// import logo from "@/assets/logo-without-bg.png"
 import { useState } from "react"
 
 const formSchema = z.object({
@@ -39,9 +39,9 @@ export default function LoginForm() {
     <div className="min-h-screen flex items-center justify-center  px-4">
       <div className="w-full max-w-4xl bg-white py-5 px-5 rounded-lg">
         <div className="text-center">
-          <div className="flex justify-center ">
+          {/* <div className="flex justify-center ">
             <Image src={logo} width={200} height={250} alt="FreedomPath Logo" />
-          </div>
+          </div> */}
           <h1 className="text-2xl font-semibold text-foreground">Welcome To FreedomPath</h1>
           <p className="text-sm text-muted-foreground">Sign in to your account</p>
         </div>

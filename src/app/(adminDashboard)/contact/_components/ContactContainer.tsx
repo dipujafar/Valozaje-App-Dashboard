@@ -6,8 +6,11 @@ import twitterImage from "@/assets/icon/x_icon.png";
 import Image from "next/image";
 import { Button } from "antd";
 import { Plus } from "lucide-react";
+import { useState } from "react";
+import AddPlatformModal from "@/components/(adminDashboard)/modals/AddPlatformModal";
 
 export default function ContactContainer() {
+    const [open, setOpen] = useState(false)
     const data = [
         {
             id: 1,
@@ -32,7 +35,6 @@ export default function ContactContainer() {
     ]
     return (
         <div>
-
             <div className="flex justify-center items-center lg:gap-10 gap-8">
                 {
                     data.map((item) => (
@@ -44,8 +46,9 @@ export default function ContactContainer() {
                 }
             </div>
             <div className="mx-auto max-w-[300px] mt-10">
-                <Button icon={<Plus />} className="w-[300px] mx-auto h-[40px]">Add Platform </Button>
+                <Button onClick={() => setOpen(true)} icon={<Plus />} className="w-[300px] mx-auto h-[40px]">Add Platform </Button>
             </div>
+            <AddPlatformModal open={open} setOpen={setOpen} />
         </div>
     )
 }

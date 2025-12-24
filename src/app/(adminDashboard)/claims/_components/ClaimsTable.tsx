@@ -1,12 +1,13 @@
 "use client";
 import { Input } from 'antd'
-import { Search, Star } from 'lucide-react'
-import React from 'react'
+import { Search } from 'lucide-react'
+import React, { useState } from 'react'
 import DataTable from '@/utils/DataTable'
 import { Image as AntImage, TableProps } from "antd";
 import { Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from '@/lib/utils';
+import ClaimDetailsModal from '@/components/(adminDashboard)/modals/ClaimDetailsModal';
 
 type TDataType = {
     key?: number;
@@ -27,7 +28,7 @@ const data: TDataType[] = Array.from({ length: 5 }).map((_, inx) => ({
 }));
 
 export default function ClaimsTable() {
-    const router = useRouter();
+    const [open, setOpen] = useState(false);
     const columns: TableProps<TDataType>["columns"] = [
         {
             title: "Driver",
@@ -40,7 +41,7 @@ export default function ClaimsTable() {
         {
             title: "Against",
             dataIndex: "against",
-             render: (text) => <div className="flex  items-center gap-x-2">
+            render: (text) => <div className="flex  items-center gap-x-2">
                 <AntImage src={"/client_dummy_image.png"} alt="e-book_image" width={50} height={50} className="object-cover rounded-full" />
                 <p>{text}</p>
             </div>
@@ -58,17 +59,20 @@ export default function ClaimsTable() {
             title: "Action",
             dataIndex: "action",
             render: (_, record) => (
-                <div className='bg-[#EAF6EC] px-2 py-1 rounded-lg w-fit flex gap-x-2 items-center text-[#24983F]'>
-                    <Eye size={20} color="#24983F" onClick={() => router.push(`/book-management/add-book`)} className="cursor-pointer" />
+                <div onClick={() => setOpen(true)} className='bg-[#EAF6EC] px-2 py-1 rounded-lg w-fit flex gap-x-2 items-center text-[#24983F]'>
+                    <Eye size={20} color="#24983F" className="cursor-pointer" />
                     <span>View</span>
                 </div>
             ),
         },
     ];
     return (
-        <div className='space-y-10'>
-            <Input prefix={<Search color='#686868' size={18} />} type='text' placeholder='Search passengers by name,email, or phone....' className='!border-[#B9B9B9] h-[40px]' />
-            <DataTable columns={columns} data={data} pageSize={40}></DataTable>
-        </div>
+        <>
+            <div className='space-y-10'>
+                <Input prefix={<Search color='#686868' size={18} />} type='text' placeholder='Search passengers by name,email, or phone....' className='!border-[#B9B9B9] h-[40px]' />
+                <DataTable columns={columns} data={data} pageSize={40}></DataTable>
+            </div>
+            <ClaimDetailsModal open={open} setOpen={setOpen} />
+        </>
     )
 }

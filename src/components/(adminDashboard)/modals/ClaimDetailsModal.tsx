@@ -55,7 +55,7 @@ const ClaimDetailsModal = ({
                         />
                     </div>
                 </div>
-                <div >
+                <div className="space-y-4 mt-5">
                     {/* User Cards Row */}
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                         {/* Reported By Card */}
@@ -109,7 +109,7 @@ const ClaimDetailsModal = ({
                     {/* Description Card */}
                     <Card className="border-border/50">
                         <CardContent className="px-6 py-6">
-                            <p className="text-pretty text-sm leading-relaxed text-foreground">{description}</p>
+                            <p className="text-pretty text-sm leading-relaxed text-foreground max-w-2xl">{description}</p>
                         </CardContent>
                     </Card>
                 </div>

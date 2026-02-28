@@ -33,6 +33,13 @@ const dashboardAPi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.dashboard],
     }),
+    getCommissionPullData: builder.query({
+      query: () => ({
+        url: "/dashboard/commission-pull",
+        method: "GET",
+      }),
+      providesTags: [tagTypes.dashboard],
+    }),
   }),
 });
 
@@ -41,4 +48,5 @@ export const {
   useGetChartDataQuery,
   useGetStatsDataQuery,
   useGetEarningsDataQuery,
+  useGetCommissionPullDataQuery,
 } = dashboardAPi;

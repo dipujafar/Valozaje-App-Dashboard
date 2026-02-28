@@ -7,8 +7,6 @@ import { useGetStatsDataQuery } from "@/redux/api/dashboardApi";
 export default function StatContainer() {
   const { data, isLoading, isError } = useGetStatsDataQuery({});
 
-  console.log("Stats Data:", data);
-
   const statsData = data?.data;
 
   const statData = [

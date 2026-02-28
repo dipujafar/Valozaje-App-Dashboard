@@ -18,7 +18,18 @@ const dashboardAPi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.dashboard],
     }),
+    getStatsData: builder.query({
+      query: () => ({
+        url: "/dashboard/stats",
+        method: "GET",
+      }),
+      providesTags: [tagTypes.dashboard],
+    }),
   }),
 });
 
-export const { useGetDashboardDataQuery, useGetChartDataQuery } = dashboardAPi;
+export const {
+  useGetDashboardDataQuery,
+  useGetChartDataQuery,
+  useGetStatsDataQuery,
+} = dashboardAPi;

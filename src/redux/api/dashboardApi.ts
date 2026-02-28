@@ -25,6 +25,14 @@ const dashboardAPi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.dashboard],
     }),
+    getEarningsData: builder.query({
+      query: (period) => ({
+        url: "/dashboard/earnings",
+        method: "GET",
+        params: { period },
+      }),
+      providesTags: [tagTypes.dashboard],
+    }),
   }),
 });
 
@@ -32,4 +40,5 @@ export const {
   useGetDashboardDataQuery,
   useGetChartDataQuery,
   useGetStatsDataQuery,
+  useGetEarningsDataQuery,
 } = dashboardAPi;

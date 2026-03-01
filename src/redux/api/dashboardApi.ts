@@ -40,6 +40,13 @@ const dashboardAPi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.dashboard],
     }),
+    getPendingActionsData: builder.query({
+      query: () => ({
+        url: "/dashboard/pending-actions",
+        method: "GET",
+      }),
+      providesTags: [tagTypes.dashboard],
+    }),
   }),
 });
 
@@ -49,4 +56,5 @@ export const {
   useGetStatsDataQuery,
   useGetEarningsDataQuery,
   useGetCommissionPullDataQuery,
+  useGetPendingActionsDataQuery,
 } = dashboardAPi;

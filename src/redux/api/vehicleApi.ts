@@ -32,9 +32,10 @@ const vehicleApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.vehicles],
     }),
     rejectVehicle: builder.mutation({
-      query: (id) => ({
+      query: ({ id, rejectionReason }) => ({
         url: `/vehicles/${id}/reject`,
         method: "PATCH",
+        body: { rejectionReason },
       }),
       invalidatesTags: [tagTypes.vehicles],
     }),

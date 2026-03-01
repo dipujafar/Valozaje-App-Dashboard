@@ -47,6 +47,13 @@ const dashboardAPi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.dashboard],
     }),
+    getRecentActivityData: builder.query({
+      query: () => ({
+        url: "/dashboard/recent-activity",
+        method: "GET",
+      }),
+      providesTags: [tagTypes.dashboard],
+    }),
   }),
 });
 
@@ -57,4 +64,5 @@ export const {
   useGetEarningsDataQuery,
   useGetCommissionPullDataQuery,
   useGetPendingActionsDataQuery,
+  useGetRecentActivityDataQuery,
 } = dashboardAPi;

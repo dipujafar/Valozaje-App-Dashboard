@@ -163,7 +163,7 @@ export const ReviewApplication = ({
                 {vehicleData.licensePlate}
               </p>
             </div>
-            <div className="flex items-center gap-2 flex-shrink-0">
+            {/* <div className="flex items-center gap-2 flex-shrink-0">
               <Button
                 variant="destructive"
                 size="sm"
@@ -200,7 +200,7 @@ export const ReviewApplication = ({
                 <span className="sr-only">Approve</span>
                 <Check className="h-4 w-4" />
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

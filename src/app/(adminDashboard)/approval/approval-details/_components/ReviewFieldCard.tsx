@@ -25,7 +25,7 @@ export const ReviewFieldCard = ({
         "bg-card rounded-lg border border-border p-4 shadow-[0_0_10px_0_rgba(0,0,0,0.2)] transition-shadow hover:shadow-card-hover",
         isApproved === true && "border-success/50 bg-accent/30",
         isApproved === false && "border-destructive/30 bg-destructive/5",
-        className
+        className,
       )}
     >
       <div className="flex items-center justify-between gap-4">
@@ -37,7 +37,7 @@ export const ReviewFieldCard = ({
             {value}
           </p>
         </div>
-        <div className="flex items-center gap-2 flex-shrink-0">
+        {/* <div className="flex items-center gap-2 flex-shrink-0">
           <Button
             variant="destructive"
             size="sm"
@@ -57,7 +57,7 @@ export const ReviewFieldCard = ({
           >
             <Check className="h-4 w-4" />
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

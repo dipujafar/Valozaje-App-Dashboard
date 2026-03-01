@@ -36,7 +36,7 @@ export const VehicleImageCard = ({
             className="max-h-32 w-auto object-contain"
           />
         </div>
-        <div className="flex items-center gap-2 flex-shrink-0">
+        {/* <div className="flex items-center gap-2 flex-shrink-0">
           <Button
             variant="destructive"
             size="sm"
@@ -56,7 +56,7 @@ export const VehicleImageCard = ({
           >
             <Check className="h-4 w-4" />
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

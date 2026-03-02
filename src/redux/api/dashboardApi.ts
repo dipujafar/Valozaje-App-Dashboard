@@ -18,7 +18,51 @@ const dashboardAPi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.dashboard],
     }),
+    getStatsData: builder.query({
+      query: () => ({
+        url: "/dashboard/stats",
+        method: "GET",
+      }),
+      providesTags: [tagTypes.dashboard],
+    }),
+    getEarningsData: builder.query({
+      query: (period) => ({
+        url: "/dashboard/earnings",
+        method: "GET",
+        params: { period },
+      }),
+      providesTags: [tagTypes.dashboard],
+    }),
+    getCommissionPullData: builder.query({
+      query: () => ({
+        url: "/dashboard/commission-pull",
+        method: "GET",
+      }),
+      providesTags: [tagTypes.dashboard],
+    }),
+    getPendingActionsData: builder.query({
+      query: () => ({
+        url: "/dashboard/pending-actions",
+        method: "GET",
+      }),
+      providesTags: [tagTypes.dashboard],
+    }),
+    getRecentActivityData: builder.query({
+      query: () => ({
+        url: "/dashboard/recent-activity",
+        method: "GET",
+      }),
+      providesTags: [tagTypes.dashboard],
+    }),
   }),
 });
 
-export const { useGetDashboardDataQuery, useGetChartDataQuery } = dashboardAPi;
+export const {
+  useGetDashboardDataQuery,
+  useGetChartDataQuery,
+  useGetStatsDataQuery,
+  useGetEarningsDataQuery,
+  useGetCommissionPullDataQuery,
+  useGetPendingActionsDataQuery,
+  useGetRecentActivityDataQuery,
+} = dashboardAPi;

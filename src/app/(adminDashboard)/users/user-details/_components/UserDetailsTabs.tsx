@@ -14,9 +14,10 @@ interface UserData {
 
 interface UserDetailsTabsProps {
   userData: UserData;
+  userId: string;
 }
 
-const UserDetailsTabs = ({ userData }: UserDetailsTabsProps) => {
+const UserDetailsTabs = ({ userData, userId }: UserDetailsTabsProps) => {
   return (
     <Tabs defaultValue="profile" className="w-full">
       <TabsList className="bg-transparent border-b border-border rounded-none w-full justify-start h-auto p-0 mb-6">
@@ -39,7 +40,7 @@ const UserDetailsTabs = ({ userData }: UserDetailsTabsProps) => {
       </TabsContent>
 
       <TabsContent value="documents" className="mt-0">
-        <DocumentsTab />
+        <DocumentsTab userId={userId} />
       </TabsContent>
     </Tabs>
   );

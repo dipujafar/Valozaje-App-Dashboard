@@ -14,9 +14,12 @@ const usersApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.users],
     }),
     getUserById: builder.query({
-      query: (id) => ({
+      query: ({ id, includeVehicle = false }) => ({
         url: `/users/${id}`,
         method: "GET",
+        params: {
+          ...(includeVehicle && { includeVehicle: true }),
+        },
       }),
       providesTags: [tagTypes.users],
     }),

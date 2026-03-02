@@ -12,7 +12,14 @@ export default function UserDetailsPage() {
   const router = useRouter();
   const userId = params.id as string;
 
-  const { data: apiData, isLoading, isError } = useGetUserByIdQuery(userId);
+  const {
+    data: apiData,
+    isLoading,
+    isError,
+  } = useGetUserByIdQuery({
+    id: userId,
+    includeVehicle: false,
+  });
 
   if (isLoading) {
     return (
@@ -63,6 +70,7 @@ export default function UserDetailsPage() {
           {/* Right Side - Tabs */}
           <div className="flex-1 min-w-0">
             <UserDetailsTabs
+              userId={userId}
               userData={{
                 fullName: userData.fullName,
                 email: userData.email,

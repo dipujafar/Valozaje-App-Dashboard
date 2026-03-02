@@ -13,7 +13,14 @@ const usersApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.users],
     }),
+    getUserById: builder.query({
+      query: (id) => ({
+        url: `/users/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.users],
+    }),
   }),
 });
 
-export const { useGetUsersQuery } = usersApi;
+export const { useGetUsersQuery, useGetUserByIdQuery } = usersApi;

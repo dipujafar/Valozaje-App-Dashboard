@@ -7,6 +7,10 @@ import { Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useGetUsersQuery } from "@/redux/api/usersApi";
+import {
+  transformUsersForTable,
+  formatVehicleInfo,
+} from "@/utils/userTransformers";
 
 type VehicleType = {
   _id: string;
@@ -66,22 +70,9 @@ export default function UsersTable() {
     limit: 10,
     totalPages: 1,
   };
-
-  // Map API data to table format
-  const data: TDataType[] = users.map((user: any, index: number) => ({
-    key: user._id,
-    serial: (page - 1) * limit + index + 1,
-    _id: user._id,
-    name: user.fullName || user.email,
-    image: user.image || "/user_image.png",
-    earned: user.totalEarned || 0,
-    commission: user.dueCommission || 0,
-    vehicle: user.vehicle || null,
-    due: user.dueCommission || 0,
-    trip: user.tripCount || 0,
-    travel: user.totalSpent || 0,
-    rating: user.averageRating || null,
-  }));
+  console.log("users:", users);
+  // Map API data to table format using utility function
+  const data: TDataType[] = transformUsersForTable(users, page, limit);
   const columns: TableProps<TDataType>["columns"] = [
     {
       title: "Serial",
@@ -111,15 +102,7 @@ export default function UsersTable() {
       title: "Vehicle",
       dataIndex: "vehicle",
       key: "vehicle",
-      render: (vehicle) => {
-        if (!vehicle) return <p>N/A</p>;
-        if (typeof vehicle === "object") {
-          const vehicleText =
-            `${vehicle.brand || ""} ${vehicle.vehicleModel || vehicle.vehicleType || ""}`.trim();
-          return <p>{vehicleText || "N/A"}</p>;
-        }
-        return <p>{vehicle}</p>;
-      },
+      render: (vehicle) => <p>{formatVehicleInfo(vehicle)}</p>,
     },
     {
       title: "Due",

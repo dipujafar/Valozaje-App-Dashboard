@@ -2,7 +2,12 @@
  * Utility functions for transforming user data from API responses
  */
 
-const BASE_URL = process.env.NEXT_PUBLIC_FILE_URL || "http://localhost:3033";
+import { envConfig } from "@/config";
+
+const BASE_URL =
+  envConfig.fileUrl ||
+  process.env.NEXT_PUBLIC_FILE_URL ||
+  "http://localhost:3033";
 
 /**
  * Transforms user image path to full URL

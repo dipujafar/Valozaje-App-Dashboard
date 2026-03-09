@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const LoginPage = () => {
-  return <div className="bg-[#DEEEFF]">
+  return <div className="bg-[#93c293]">
     <LoginForm />
   </div>;
 };

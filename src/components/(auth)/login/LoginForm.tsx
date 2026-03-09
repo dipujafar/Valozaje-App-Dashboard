@@ -21,6 +21,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/features/authSlice";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Eye, EyeOff } from "lucide-react";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -53,7 +54,6 @@ export default function LoginForm() {
         email: values.email,
         password: values.password,
       }).unwrap();
-      console.log("Login Response:", response);
       if (response?.success) {
         // Store token and user data in Redux
         dispatch(
@@ -84,7 +84,7 @@ export default function LoginForm() {
             <Image src={logo} width={200} height={250} alt="FreedomPath Logo" />
           </div> */}
           <h1 className="text-2xl font-semibold text-foreground">
-            Welcome To FreedomPath
+            Welcome To Valozaje
           </h1>
           <p className="text-sm text-muted-foreground">
             Sign in to your account
@@ -125,12 +125,23 @@ export default function LoginForm() {
                   <div className="relative">
                     <FormControl>
                       <Input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
                         className="h-12 rounded-lg"
                         {...field}
                       />
                     </FormControl>
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                    >
+                      {showPassword ? (
+                        <Eye />
+                      ) : (
+                        <EyeOff />
+                      )}
+                    </button>
                   </div>
                   <FormMessage />
                 </FormItem>
@@ -163,7 +174,7 @@ export default function LoginForm() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full h-12 bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white rounded-lg font-normal disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full h-12 bg-main-color hover:bg-green-700 text-white rounded-lg font-normal disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? "Signing in..." : "Sign in"}
             </Button>

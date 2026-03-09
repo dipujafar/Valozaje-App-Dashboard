@@ -23,8 +23,8 @@ export default function StatCard({
       </div>
       <p className="lg:text-2xl text-xl font-medium">{amount}</p>
       <div>
-        { growth && <div>
-          <span className={cn("text-green-600", !increase && "text-red-600")}>{!increase ? "+" : "-"}{growth}%</span>
+        { growth != undefined && <div>
+          <span className={cn("text-green-600", !increase && "text-red-600")}>{increase ? "+" : "-"}{growth}%</span>
           <span> from last month</span>
         </div>}
         {tagline && tagline}

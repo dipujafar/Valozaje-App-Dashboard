@@ -1,30 +1,31 @@
 import { Star, Phone, Mail, MapPin } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Image } from "antd"
+import { cn } from "@/lib/utils"
+import CustomAvatar from "@/components/ui/customAvatar"
 
 interface ProfileCardProps {
     name: string
     rating: number
-    status: string
+    isActive: boolean
     phone: string
     email: string
     location: string
     avatarUrl?: string
 }
 
-export function ProfileCard({ name, rating, status, phone, email, location }: ProfileCardProps) {
+export function ProfileCard({ name, rating, isActive, phone, email, location, avatarUrl }: ProfileCardProps) {
     return (
         <Card className="p-6 shadow-[0_0_10px_0_rgba(0,0,0,0.2)]">
             <div className="flex items-start gap-4">
                 <div className="relative mb-3">
-                    <div className="size-16 rounded-full overflow-hidden border-4 border-card shadow-avatar">
-                        <Image
-                            src={"/client_dummy_image.png"}
+                    <div className="">
+                        {avatarUrl ? <Image
+                            src={avatarUrl}
                             alt={name}
-                            className="w-full h-full object-cover"
-                        />
+                            className="!size-16 !rounded-full"
+                        /> : <CustomAvatar text={name.charAt(0) || "N"} />}
                     </div>
                     <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-card rounded-full px-2 py-0.5 flex items-center gap-1 shadow-sm border border-border">
                         <Star color="#F5A91C" fill="#F5A91C" className="w-3 h-3" />
@@ -37,15 +38,15 @@ export function ProfileCard({ name, rating, status, phone, email, location }: Pr
 
                     <div className="flex items-center gap-2">
                         <Badge
-                            variant="secondary"
-                            className="bg-emerald-50 text-emerald-700 hover:bg-emerald-50 border-emerald-200"
+
+                            className={cn(isActive ? "text-emerald-800 bg-emerald-100" : "text-red-800 bg-red-100")}
                         >
-                            {status}
+                            {isActive ? "Active" : "Inactive"}
                         </Badge>
                     </div>
                 </div>
             </div>
-            <hr className="mt-3"/>
+            <hr className="mt-3" />
             <div className="mt-3 space-y-3">
                 <ContactInfo icon={Phone} text={phone} />
                 <ContactInfo icon={Mail} text={email} />

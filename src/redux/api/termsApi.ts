@@ -5,14 +5,14 @@ const termsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getTerms: builder.query({
       query: () => ({
-        url: "/terms",
+        url: "/terms-and-conditions",
         method: "GET",
       }),
       providesTags: [tagTypes.terms],
     }),
     updateTerms: builder.mutation({
       query: (data) => ({
-        url: "/terms",
+        url: "/terms-and-conditions",
         method: "POST",
         body: data,
       }),

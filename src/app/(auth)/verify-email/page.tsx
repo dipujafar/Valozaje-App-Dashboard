@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 const verifyEmail = () => {
-  return <div> <OtpVerificationForm /> </div>;
+  return <div className="bg-[#93c293]"> <OtpVerificationForm /> </div>;
 };
 
 export default verifyEmail;

@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/form";
 import { Modal } from "antd";
 import { RiCloseLargeLine } from "react-icons/ri";
+import { useCreateReportMutation } from "@/redux/api/reportsApi";
+import { toast } from "sonner";
 
 // Validation schema
 const formSchema = z.object({
@@ -32,6 +34,7 @@ const AddClaimSubjectModal = ({
     setOpen: (collapsed: boolean) => void;
     title?: string
 }) => {
+    const [createClaimSubject, { isLoading }] = useCreateReportMutation();
     const form = useForm<FormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -41,7 +44,14 @@ const AddClaimSubjectModal = ({
 
 
     const onSubmit = async (data: FormData) => {
-        console.log(data);
+        const formattedData = { title: data.claimSubjects };
+        try {
+            await createClaimSubject(formattedData).unwrap();
+            form.reset();
+            setOpen(false);
+        } catch (error) {
+            toast.error("Failed to create claim subject");
+        }
     };
 
     const onError = (errors: any) => {
@@ -87,7 +97,7 @@ const AddClaimSubjectModal = ({
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel className="text-xl font-medium text-gray-700">
-                                                   { title || "Add Claim Subject"}
+                                                    {title || "Add Claim Subject"}
                                                 </FormLabel>
                                                 <FormControl>
                                                     <Input

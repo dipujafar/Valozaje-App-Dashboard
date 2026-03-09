@@ -70,7 +70,7 @@ export default function UsersTable() {
     limit: 10,
     totalPages: 1,
   };
-  console.log("users:", users);
+
   // Map API data to table format using utility function
   const data: TDataType[] = transformUsersForTable(users, page, limit);
   const columns: TableProps<TDataType>["columns"] = [

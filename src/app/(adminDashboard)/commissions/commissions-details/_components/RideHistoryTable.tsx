@@ -1,60 +1,50 @@
 "use client";
 import DataTable from '@/utils/DataTable'
-import { Card, Input } from 'antd'
-import { ArrowRight, Search } from 'lucide-react'
+import { Card } from 'antd'
+import { ArrowRight } from 'lucide-react'
 import React from 'react'
 import { Image as AntImage, TableProps } from "antd";
-import { Eye } from "lucide-react";
-import { useRouter } from "next/navigation";
-import ThresholdProgress from '@/components/shared/ThresholdProgress';
 import { cn } from '@/lib/utils';
+import moment from 'moment'
+import { imagePreview } from '@/utils/imagePreview';
 
 
 type TDataType = {
     key?: number;
     serial: number;
-    name: string;
+    passengerName: string;
+    passengerImage: string;
     date: string;
-    location: string;
-    destination: string;
     fare: string;
     commission: string;
-    payment: string;
+    status: string;
+    route: {
+        from: string;
+        to: string;
+    }
 };
 
-const data: TDataType[] = Array.from({ length: 8 }).map((_, inx) => ({
-    key: inx,
-    serial: inx + 1,
-    name: "Gloirepaluku",
-    date: "22-08-2025",
-    commission: "150",
-    location: "City 1",
-    destination: "City 2",
-    fare: "500",
-    payment: inx % 2 === 0 ? "Paid" : "Due",
-}));
 
 
-
-export default function RideHistoryTable() {
-    const router = useRouter();
+export default function RideHistoryTable({ data }: any) {
+    console.log(data)
     const columns: TableProps<TDataType>["columns"] = [
         {
             title: "Name",
-            dataIndex: "name",
-            render: (text) => <div className="flex  items-center gap-x-2">
-                <AntImage src={"/client_dummy_image.png"} alt="e-book_image" width={50} height={50} className="object-cover rounded-full" />
-                <p>{text}</p>
+            dataIndex: "passengerName",
+            render: (text, record) => <div className="flex  items-center gap-x-2 max-w-md">
+                {record.passengerImage ? <AntImage src={imagePreview(record?.passengerImage)} alt="e-book_image" width={50} height={50} className="object-cover rounded-full" /> : <div className='size-[50px] bg-gray-200 rounded-full flex items-center justify-center font-medium text-xl'>{text?.charAt(0) || "N"}</div>}
+                <p>{text || "N/A"}</p>
             </div>
         },
         {
             title: "Date",
             dataIndex: "date",
+            render: (text) => <p>{moment(text).format("ll")}</p>,
         },
         {
             title: "Route",
-            dataIndex: "commission",
-            render: (text, record) => <p className='flex gap-x-5'>{record.location}  <ArrowRight size={20} /> {record.destination}</p>,
+            render: (text, record) => <p className='flex gap-x-5 max-w-[400px] items-center '>{record?.route?.from}  <ArrowRight size={20} /> {record?.route?.to}</p>,
         },
         {
             title: "Fare",
@@ -68,9 +58,9 @@ export default function RideHistoryTable() {
         },
         {
             title: "Payment",
-            dataIndex: "payment",
+            dataIndex: "status",
             render: (text, record) => (
-                <div className={cn("text-[#24983F] w-fit px-3 py-1 bg-[#EAF6EC] rounded-md", text === "Due" && "text-[#8C7000] bg-[#FFFAE6] ")}>{text}</div>
+                <div className={cn("text-[#24983F] w-fit px-3 py-1 bg-[#EAF6EC] rounded-md capitalize", text != "completed" && "text-[#8C7000] bg-[#FFFAE6] ")}>{text}</div>
             ),
         },
     ];

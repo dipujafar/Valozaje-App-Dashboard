@@ -39,7 +39,7 @@ export function AccountSummary({
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-medium text-[#989898] uppercase tracking-wide">Threshold Progress</h3>
             <span className="text-sm font-semibold text-foreground">
-                <ThresholdProgress current={65} total={200} />
+                <ThresholdProgress current={currentProgress} total={targetProgress} />
             </span>
           </div>
 

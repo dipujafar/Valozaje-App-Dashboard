@@ -3,6 +3,7 @@ import React from "react";
 import { ReviewApplication } from "../_components/ReviewApplication";
 import { useParams, useRouter } from "next/navigation";
 import { useGetVehicleByIdQuery } from "@/redux/api/vehicleApi";
+import { imagePreview } from "@/utils/imagePreview";
 
 export default function ApprovalDetails() {
   const params = useParams();
@@ -45,11 +46,10 @@ export default function ApprovalDetails() {
   const vehicle = apiData.data;
 
   // Convert image paths to full URLs
-  const baseUrl = "http://localhost:3033";
   const imageUrls =
     vehicle.vehicleImages && vehicle.vehicleImages.length > 0
       ? vehicle.vehicleImages.map(
-          (imagePath: string) => `${baseUrl}${imagePath}`,
+          (imagePath: string) => imagePreview(imagePath),
         )
       : ["/car_image.jpg"];
 

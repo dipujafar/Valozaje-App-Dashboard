@@ -8,7 +8,6 @@ export function CommissionRadialChart() {
     isLoading,
     isError,
   } = useGetCommissionPullDataQuery({});
-  console.log("Commission API Data:", apiData);
   const commissionData = {
     paid: apiData?.data?.paidCommission || 0,
     pending: apiData?.data?.pendingCommission || 0,

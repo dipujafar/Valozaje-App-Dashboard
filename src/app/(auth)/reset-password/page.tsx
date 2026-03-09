@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 const ResetPassword = () => {
-  return <div> <ResetPasswordForm /> </div>;
+  return <div className="bg-[#93c293]"> <ResetPasswordForm /> </div>;
 };
 
 export default ResetPassword;

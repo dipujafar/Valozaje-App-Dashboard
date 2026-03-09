@@ -18,7 +18,7 @@ const authSlice = createSlice({
       state.token = token;
 
       // Store token in Cookies for middleware authentication
-      Cookies.set("famsched-access-token", token, {
+      Cookies.set("valozaje-access-token", token, {
         path: "/",
         expires: 7,
       });
@@ -29,7 +29,7 @@ const authSlice = createSlice({
       state.token = null;
 
       // Remove token from cookie
-      Cookies.remove("famsched-access-token", { path: "/" });
+      Cookies.remove("valozaje-access-token", { path: "/" });
     },
   },
 });

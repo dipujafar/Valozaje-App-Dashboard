@@ -28,11 +28,9 @@ const PersonalInformationContainer = () => {
     const input = event.target;
 
     const file = input.files?.[0];
-    console.log(file);
 
     if (file) {
       const url = URL.createObjectURL(file);
-      console.log(url);
       setImageUrl(url);
       setFileName(file);
     } else {

@@ -30,13 +30,13 @@ export function ForgetPassForm() {
   };
 
   return (
-    <div className="h-screen flex flex-col md:flex-row">
+    <div className="h-screen flex flex-col items-center justify-center md:flex-row">
       {/* Left Side - Purple Gradient with Logo */}
-      <div className="flex-1">
+      {/* <div className="flex-1">
         <LogoSection />
-      </div>
+      </div> */}
       {/* Right Side - Login Form */}
-      <div className="flex-1 bg-gray-50 flex flex-col items-center justify-center px-12">
+      <div className="flex-1 bg-gray-50 max-w-xl mx-auto py-10 rounded-md flex flex-col items-center justify-center px-12">
         {/* forgot password form */}
         <div className="w-full max-w-md space-y-6">
           <div className="text-center space-y-2">
@@ -78,7 +78,7 @@ export function ForgetPassForm() {
               {/* Login Button */}
               <Button
                 type="submit"
-                className="w-full h-12 bg-main-color hover:bg-red-700 text-white font-medium text-base"
+                className="w-full h-12 bg-main-color hover:bg-green-700 text-white font-medium text-base"
               >
                 Send OTP
               </Button>

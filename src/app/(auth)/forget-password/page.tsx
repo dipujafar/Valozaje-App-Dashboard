@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 };
 
 const ForgetPasswordPage = () => {
-  return <div> <ForgetPassForm /></div>;
+  return <div className="bg-[#93c293]"> <ForgetPassForm /></div>;
 };
 
 export default ForgetPasswordPage;

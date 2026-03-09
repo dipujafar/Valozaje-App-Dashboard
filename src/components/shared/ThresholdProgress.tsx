@@ -10,7 +10,7 @@ export default function ThresholdProgress({ current, total }: { current: number;
           marginBottom: 6,
         }}
       >
-        ${current} / ${total}
+        {current} / {total}
       </div>
 
       <div

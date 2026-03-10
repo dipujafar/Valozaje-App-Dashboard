@@ -1,5 +1,4 @@
 
-
 export const tagTypes = {
   auth: "Auth",
   terms: "Terms",
@@ -11,6 +10,7 @@ export const tagTypes = {
   vehicles: "Vehicles",
   commission: "Commission",
   reports: "Reports",
+  platform: "Platform",
 };
 
 export const tagTypesList = [
@@ -24,4 +24,5 @@ export const tagTypesList = [
   tagTypes.vehicles,
   tagTypes.commission,
   tagTypes.reports,
+  tagTypes.platform,
 ];

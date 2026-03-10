@@ -3,6 +3,14 @@ import { baseApi } from "./baseApi";
 
 const termsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    create: builder.mutation({
+      query: (data) => ({
+        url: "/terms-and-conditions",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.terms],
+    }),
     getTerms: builder.query({
       query: () => ({
         url: "/terms-and-conditions",
@@ -12,13 +20,14 @@ const termsApi = baseApi.injectEndpoints({
     }),
     updateTerms: builder.mutation({
       query: (data) => ({
-        url: "/terms-and-conditions",
-        method: "POST",
-        body: data,
+        url: `/terms-and-conditions/${data?.id}`,
+        method: "PUT",
+        body: data?.data,
       }),
       invalidatesTags: [tagTypes.terms],
     }),
   }),
 });
 
-export const { useGetTermsQuery, useUpdateTermsMutation } = termsApi;
+export const { useCreateMutation, useGetTermsQuery, useUpdateTermsMutation } =
+  termsApi;

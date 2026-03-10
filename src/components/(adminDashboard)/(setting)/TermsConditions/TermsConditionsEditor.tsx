@@ -1,18 +1,21 @@
 "use client";
 
-import { useGetTermsQuery } from "@/redux/api/termsApi";
+import { useCreateMutation, useGetTermsQuery, useUpdateTermsMutation } from "@/redux/api/termsApi";
 import { Button, Spin } from "antd";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import "react-quill/dist/quill.snow.css";
+import { toast } from "sonner";
 
 // Dynamically import ReactQuill with SSR disabled
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const TermsConditionsEditor = () => {
   const { data, isLoading } = useGetTermsQuery(undefined);
+  const [updateTerms, { isLoading: isUpdating }] = useUpdateTermsMutation();
+  const [create, { isLoading: isCreating }] = useCreateMutation();
   const [value, setValue] = useState(data?.data?.terms?.[0]?.content || '');
 
 
@@ -33,6 +36,29 @@ const TermsConditionsEditor = () => {
   useEffect(() => {
     setValue(data?.data?.terms?.[0]?.content || '');
   }, [data]);
+
+
+  const handleUpdateOrCreate = async () => {
+
+    if (data?.data?.terms?.length === 0) {
+      try {
+        await create({ content: value });
+      } catch (error) {
+        toast.error("Failed to create terms and conditions");
+      }
+    }
+
+    const updatedData = {
+      data: { content: value },
+      id: data?.data?.terms?.[0]?._id
+    }
+
+    try {
+      await updateTerms(updatedData);
+    } catch (error) {
+      toast.error("Failed to update terms and conditions");
+    }
+  };
 
 
   if (isLoading) {
@@ -69,7 +95,9 @@ const TermsConditionsEditor = () => {
           marginTop: "20px",
           border: "none",
         }}
-        disabled={isLoading}
+        disabled={isLoading || isUpdating || isCreating}
+        loading={isUpdating || isCreating}
+        onClick={handleUpdateOrCreate}
       >
         Save Changes
       </Button>

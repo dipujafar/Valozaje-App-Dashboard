@@ -90,7 +90,7 @@ const ClaimDetailsModal = ({
                     <Card className="border-border/50">
                         <CardContent className="px-6 py-4">
                             <Badge variant="destructive" className="bg-destructive/10 text-destructive hover:bg-destructive/20">
-                                {currentData?.reportSubject?.title}
+                                {currentData?.reportSubject?.title || "N/A"}
                             </Badge>
                         </CardContent>
                     </Card>
@@ -98,7 +98,7 @@ const ClaimDetailsModal = ({
                     {/* Description Card */}
                     <Card className="border-border/50">
                         <CardContent className="px-6 py-6">
-                            <p className="text-pretty text-sm leading-relaxed text-foreground max-w-2xl">{currentData?.additionalDetails}</p>
+                            <p className="text-pretty text-sm leading-relaxed text-foreground max-w-2xl">{currentData?.additionalDetails || "N/A" }</p>
                         </CardContent>
                     </Card>
                 </div>

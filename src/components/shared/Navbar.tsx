@@ -14,6 +14,10 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from "../ui/menubar";
+import { useGetProfileQuery } from "@/redux/api/profileApi";
+import { logout } from "@/redux/features/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import { useRouter } from "next/navigation";
 
 type TNavbarProps = {
   collapsed: boolean;
@@ -21,6 +25,9 @@ type TNavbarProps = {
 };
 
 const Navbar = ({ collapsed, setCollapsed }: TNavbarProps) => {
+  const { data: profileData, isLoading } = useGetProfileQuery(undefined);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   return (
     <div className="flex items-center justify-between w-[97%] font-poppins">
       {/* Header left side */}
@@ -88,11 +95,9 @@ const Navbar = ({ collapsed, setCollapsed }: TNavbarProps) => {
                 </MenubarItem>
               </Link>
               <MenubarSeparator />
-              <Link href={"/login"}>
-                <MenubarItem className="hover:bg-gray-100 cursor-pointer">
-                  Logout
-                </MenubarItem>
-              </Link>
+              <p>
+                <MenubarItem onClick={() => { dispatch(logout()); router.refresh(); }} className="hover:bg-gray-100 cursor-pointer">Logout</MenubarItem>
+              </p>
             </MenubarContent>
           </MenubarMenu>
         </Menubar>

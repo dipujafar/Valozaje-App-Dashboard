@@ -17,11 +17,9 @@ import { imagePreview } from "@/utils/imagePreview";
 const PersonalInformationContainer = () => {
   const route = useRouter();
   const [form] = Form.useForm();
-
   const [edit, setEdit] = useState(false);
   const [fileName, setFileName] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-
   const { data: profileData, isLoading } = useGetProfileQuery(undefined);
   const [updateProfile] = useUpdateProfileMutation();
 
@@ -203,7 +201,7 @@ const PersonalInformationContainer = () => {
                 <Input
                   size="large"
                   placeholder="Enter full name"
-                  readOnly={!edit}
+                  disabled
                 />
               </Form.Item>
 
@@ -212,7 +210,7 @@ const PersonalInformationContainer = () => {
                 <Input
                   size="large"
                   placeholder="Enter email"
-                  readOnly
+                  disabled
                 />
               </Form.Item>
 

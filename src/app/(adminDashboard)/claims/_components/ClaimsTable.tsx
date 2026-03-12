@@ -1,7 +1,5 @@
-"use client";
-import { Input } from 'antd'
-import { Search } from 'lucide-react'
-import React, { useState } from 'react'
+"use client";;
+import { useState } from 'react';
 import DataTable from '@/utils/DataTable'
 import { Image as AntImage, TableProps } from "antd";
 import { Eye } from "lucide-react";
@@ -10,7 +8,6 @@ import ClaimDetailsModal from '@/components/(adminDashboard)/modals/ClaimDetails
 import { useGetReportsQuery } from '@/redux/api/reportsApi';
 import { imagePreview } from '@/utils/imagePreview';
 import moment from 'moment';
-import { useDebounce } from "use-debounce";
 
 
 type TDataType = {

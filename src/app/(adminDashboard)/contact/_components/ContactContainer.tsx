@@ -1,11 +1,8 @@
 "use client"
-
-
 import { Button, Image, Spin } from "antd";
 import { Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-
 import AddPlatformModal from "@/components/(adminDashboard)/modals/AddPlatformModal";
 import {
     useDeleteContactPlatformMutation,
@@ -14,7 +11,6 @@ import {
 import { imagePreview } from "@/utils/imagePreview";
 
 export default function ContactContainer() {
-
     const { data: platforms, isLoading } = useGetContactPlatformsQuery(undefined);
     const [deletePlatform] = useDeleteContactPlatformMutation();
 

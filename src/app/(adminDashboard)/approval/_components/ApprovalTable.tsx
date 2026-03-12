@@ -7,6 +7,7 @@ import { Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useGetVehiclesQuery } from "@/redux/api/vehicleApi";
+import { imagePreview } from "@/utils/imagePreview";
 
 type TDataType = {
   key?: string;
@@ -20,8 +21,23 @@ type TDataType = {
   brand: string;
   model: string;
   licensePlate: string;
+  image: string;
   _id: string;
 };
+
+
+const statusOption = (status: string) => {
+  switch (status) {
+    case "Pending":
+      return "text-[#8C7000] bg-[#FFFAE6]";
+    case "Approved":
+      return "text-[#24983F] bg-[#EAF6EC]";
+    case "Rejected":
+      return "text-[#ae2626] bg-[#f6e2e2]";
+    default:
+      return "text-black bg-gray-200";
+  }
+}
 
 export default function ApprovalTable() {
   const router = useRouter();
@@ -50,6 +66,8 @@ export default function ApprovalTable() {
     search: debouncedSearch || undefined,
   });
 
+  console.log(apiData);
+
   // Reset to page 1 when search changes
   useEffect(() => {
     setPage(1);
@@ -75,6 +93,7 @@ export default function ApprovalTable() {
       brand: vehicle.brand,
       model: vehicle.vehicleModel,
       licensePlate: vehicle.licensePlateNumber,
+      image: vehicle?.user?.image,
       _id: vehicle._id,
     }));
   }, [apiData, page, pageSize]);
@@ -91,15 +110,16 @@ export default function ApprovalTable() {
       render: (text, record) => (
         <div className="flex items-center gap-x-2">
           <AntImage
-            src={"/client_dummy_image.png"}
+            src={imagePreview(record?.image)}
             alt="driver_image"
             width={50}
             height={50}
             className="object-cover rounded-full"
+            fallback="/user-avatar.jpg"
           />
           <div>
             <p className="font-medium">{text}</p>
-            <p className="text-xs text-gray-500">{record.vehicleType}</p>
+            {/* <p className="text-xs text-gray-500">{record.vehicleType}</p> */}
           </div>
         </div>
       ),
@@ -112,7 +132,8 @@ export default function ApprovalTable() {
           <p>
             {text} {record.model}
           </p>
-          <p className="text-xs text-gray-500">{record.licensePlate}</p>
+          {/* <p className="text-xs text-gray-500">{record.licensePlate}</p> */}
+          <p className="text-xs text-gray-500">{record.vehicleType}</p>
         </div>
       ),
     },
@@ -122,7 +143,7 @@ export default function ApprovalTable() {
       align: "center",
     },
     {
-      title: "Number",
+      title: "Phone",
       dataIndex: "number",
       align: "center",
     },
@@ -136,8 +157,8 @@ export default function ApprovalTable() {
       render: (text) => (
         <div
           className={cn(
-            "text-[#24983F] w-fit px-3 py-1 bg-[#EAF6EC] rounded-md",
-            text === "Pending" && "text-[#8C7000] bg-[#FFFAE6] ",
+            " w-fit px-3 py-1  rounded-md",
+            statusOption(text)
           )}
         >
           {text}

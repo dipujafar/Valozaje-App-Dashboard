@@ -21,12 +21,12 @@ const VehicleField = ({ label, value, onClear }: VehicleFieldProps) => (
         readOnly
         className="pr-10 bg-muted/30 border-border text-foreground"
       />
-      <button
+      {/* <button
         onClick={onClear}
         className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-destructive flex items-center justify-center hover:bg-destructive/80 transition-colors"
       >
         <X className="w-3 h-3 text-destructive-foreground" />
-      </button>
+      </button> */}
     </div>
   </div>
 );

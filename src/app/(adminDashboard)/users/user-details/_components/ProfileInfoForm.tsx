@@ -81,11 +81,11 @@ const ProfileInfoForm = ({ userData }: ProfileInfoFormProps) => {
             </div>
 
             {/*  About */}
-            <FormField
+            {/* <FormField
                 label="About"
                 value={userData.about}
                 type="textarea"
-            />
+            /> */}
         </div>
     );
 };

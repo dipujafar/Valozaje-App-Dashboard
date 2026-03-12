@@ -1,76 +1,119 @@
-"use client";;
+"use client";
 import moment from "moment";
 import { Bell, Trash2 } from "lucide-react";
-
-const notificationData = [
-  {
-    message:
-      "Gloirepaluku",
-    description: "Added A new Publications",
-    time: "Mon Dec 22 2025 22:00:00 GMT+0000",
-  },
-  {
-    message: "Gloirepaluku",
-    description: "Added A new Publications",
-    time: "Mon Dec 19 2025 22:00:00 GMT+0000",
-  },
-  {
-    message: "Gloirepaluku",
-    description: "Added A new Publications",
-    time: "Mon Dec 18 2025 22:00:00 GMT+0000",
-  },
-];
+import {
+  useDeleteNotificationMutation,
+  useGetNotificationQuery,
+} from "@/redux/api/notificationApi";
+import PaginationSection from "@/components/shared/PaginationSection";
+import { useSearchParams } from "next/navigation";
+import { Spin } from "antd";
+import { toast } from "sonner";
 
 const NotificationContainer = () => {
+  const page = useSearchParams().get("page") || "1";
+  const limit = useSearchParams().get("limit") || "10";
 
+  const queries: Record<string, string> = {};
+  if (page) queries["page"] = page;
+  if (limit) queries["limit"] = limit;
 
+  const { data, isLoading } = useGetNotificationQuery(queries);
+
+  const [deleteNotification] =
+    useDeleteNotificationMutation();
+
+  const notifications = data?.data?.notifications || [];
+
+  const handleDelete = (id: string) => {
+    toast("Delete this notification?", {
+      description: "This action cannot be undone.",
+      action: {
+        label: "Delete",
+        onClick: async () => {
+          toast.loading("Deleting notification...", { id });
+          try {
+            await deleteNotification(id).unwrap();
+            toast.success("Notification deleted successfully");
+            toast.dismiss(id);
+          } catch (error) {
+            toast.error("Failed to delete notification");
+            toast.dismiss(id);
+          }
+        },
+      },
+    });
+  };
+
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-[calc(100vh-180px)]">
+        <Spin size="large" />
+      </div>
+    );
 
   return (
     <div>
-      <div className="min-h-[80vh]  p-7">
-        <h1 className="text-2xl text-text-color  mb-2">Notifications</h1>
+      <div className="p-7">
+        <h1 className="text-2xl text-text-color mb-2">Notifications</h1>
         <hr />
 
-        {/* yesterday notification  */}
         <div className="xl:mt-8 mt-6 xl:px-10 px-6 text-text-color">
-          {/* showing today notification */}
           <div className="space-y-5">
-            {notificationData?.map((notification, index) => (
-              <div className="flex items-center gap-x-4">
-                <div className="bg-main-color size-10 flex justify-center items-center rounded-full cursor-pointer">
+            {notifications.length === 0 && (
+              <p className="text-gray-400 text-center py-10">
+                No notifications found
+              </p>
+            )}
+
+            {notifications?.map((notification: any) => (
+              <div
+                key={notification?._id}
+                className="flex items-center gap-x-4"
+              >
+                {/* icon */}
+                <div className="bg-main-color size-10 flex justify-center items-center rounded-full">
                   <Bell color="white" />
                 </div>
-                <div
-                  key={index}
-                  className="bg-white border border-gray-400 rounded-lg p-3 flex-1"
-                >
+
+                {/* notification content */}
+                <div className="bg-white border border-gray-300 rounded-lg p-3 flex-1">
                   <div className="flex justify-between gap-x-2 items-center">
-                    <h5 className="font-medium text-xl">
-                      {notification?.message}
+                    <h5 className="font-medium text-lg">
+                      {notification?.title || "Notification"}
                     </h5>
-                    <p>{moment(notification?.time).fromNow()}</p>
+
+                    <p className="text-sm text-gray-500">
+                      {moment(notification?.createdAt).fromNow()}
+                    </p>
                   </div>
-                  <p className="text-gray-500">{notification?.description}</p>
+
+                  <p className="text-gray-500 text-sm">
+                    {notification?.message}
+                  </p>
                 </div>
-                {/* delete option */}
-                <div className="bg-[#D30000]/30 size-10 flex justify-center items-center rounded-full cursor-pointer">
-                  <Trash2 color="#D30000"></Trash2>
+
+                {/* delete button */}
+                <div
+                  onClick={() => handleDelete(notification?._id)}
+                  className="bg-[#D30000]/30 size-10 flex justify-center items-center rounded-full cursor-pointer hover:bg-[#D30000]/40 transition"
+                >
+
+                  <Trash2 color="#D30000" size={18} />
+
                 </div>
               </div>
             ))}
           </div>
         </div>
       </div>
+
       {/* pagination */}
-      {/* <div className="w-max mt-3 ml-auto">
-        <Pagination
-          current={currentPage}
-          pageSize={pageSize}
-          total={notificationData.length}
-          onChange={(page) => setCurrentPage(page)}
-          showSizeChanger={false} // Disable page size changer if unnecessary
-        />
-      </div> */}
+      <PaginationSection
+        total={data?.data?.pagination?.total}
+        current={Number(page)}
+        pageSize={Number(limit)}
+      />
     </div>
   );
 };

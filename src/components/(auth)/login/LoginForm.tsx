@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import Image from "next/image";
 // import logo from "@/assets/logo-without-bg.png"
 import { useState } from "react";
 import { useLoginMutation } from "@/redux/api/authApi";
@@ -22,6 +21,7 @@ import { setUser } from "@/redux/features/authSlice";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Eye, EyeOff } from "lucide-react";
+import { jwtDecode } from "jwt-decode";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -54,12 +54,19 @@ export default function LoginForm() {
         email: values.email,
         password: values.password,
       }).unwrap();
+
+      // @ts-ignore
+      if (!jwtDecode(response?.data?.token)?.roles?.includes("admin")) {
+        toast.error("You are not authorized to access this panel.");
+        return;
+      }
+
       if (response?.success) {
         // Store token and user data in Redux
         dispatch(
           setUser({
-            user: response.data.user || { email: values.email },
-            token: response.data.token,
+            user: jwtDecode(response?.data?.token),
+            token: response?.data?.token,
           }),
         );
 

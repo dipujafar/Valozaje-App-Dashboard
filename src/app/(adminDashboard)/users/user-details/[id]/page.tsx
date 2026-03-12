@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Card } from "antd";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useGetUserByIdQuery } from "@/redux/api/usersApi";
 import UserProfileCard from "../_components/UserProfileCard";
 import UserDetailsTabs from "../_components/UserDetailsTabs";
@@ -9,7 +9,6 @@ import { transformUserForDetails } from "@/utils/userTransformers";
 
 export default function UserDetailsPage() {
   const params = useParams();
-  const router = useRouter();
   const userId = params.id as string;
 
   const {
@@ -44,6 +43,8 @@ export default function UserDetailsPage() {
   }
 
   const user = apiData.data;
+
+  console.log(user);
 
   // Transform API data using utility function
   const userData = transformUserForDetails(user);

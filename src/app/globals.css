@@ -5,8 +5,8 @@
 @tailwind utilities;
 
 :root {
-  --color-main: #28A745;
-  --color-secondary: #EFE400;
+  --color-main: #28a745;
+  --color-secondary: #efe400;
   --color-main-bg: #f8f9fa;
   --color-section-bg: #fff;
   --color-menu-item: #fff;
@@ -131,6 +131,11 @@
 /* hide scrollbar */
 .scroll-hide::-webkit-scrollbar {
   width: 0px;
+}
+
+/* ----------------------------------------- ant input related style ------------------------------------- */
+.ant-input-disabled {
+  color: #000 !important;
 }
 
 @layer base {

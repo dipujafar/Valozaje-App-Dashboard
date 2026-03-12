@@ -18,6 +18,8 @@ import { useGetProfileQuery } from "@/redux/api/profileApi";
 import { logout } from "@/redux/features/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
+import { imagePreview } from "@/utils/imagePreview";
+import CustomAvatar from "../ui/customAvatar";
 
 type TNavbarProps = {
   collapsed: boolean;
@@ -28,6 +30,9 @@ const Navbar = ({ collapsed, setCollapsed }: TNavbarProps) => {
   const { data: profileData, isLoading } = useGetProfileQuery(undefined);
   const dispatch = useAppDispatch();
   const router = useRouter();
+
+  console.log(profileData?.data?.fullName);
+
   return (
     <div className="flex items-center justify-between w-[97%] font-poppins">
       {/* Header left side */}
@@ -54,21 +59,8 @@ const Navbar = ({ collapsed, setCollapsed }: TNavbarProps) => {
       <Flex align="center" gap={20}>
         {/* Notification */}
         <Link href={"/notifications"}>
-          <div className="flex justify-center items-center size-12  rounded-full cursor-pointer relative ">
+          <div className="flex justify-center items-center size-12  rounded-full cursor-pointer relative border border-gray-400 ">
             <IoNotificationsOutline size={24} color="#545454" />
-
-            <Badge
-              count={1}
-              style={{
-                border: "none",
-                boxShadow: "none",
-                backgroundColor: "var(--color-main)",
-                color: "#fff",
-                position: "absolute",
-                top: "-24px",
-                right: "-8px",
-              }}
-            ></Badge>
           </div>
         </Link>
 
@@ -76,12 +68,12 @@ const Navbar = ({ collapsed, setCollapsed }: TNavbarProps) => {
           <MenubarMenu >
             <MenubarTrigger className="shadow-none px-0 rounded-full py-2">
               <div className="flex items-center gap-x-2  px-2 h-fit">
-                <p className="text-black">Alex</p>
-                <Avatar
-                  src={avatarImg.src}
+                <p className="text-black capitalize">{profileData?.data?.fullName || "N/A"}</p>
+                {profileData?.data?.image ? <Avatar
+                  src={imagePreview(profileData?.data?.image) || avatarImg.src}
                   size={40}
                   className="size-12"
-                ></Avatar>
+                ></Avatar> : <CustomAvatar text={profileData?.data?.fullName?.charAt(0) || "N/A"} className="text-black" />}
               </div>
             </MenubarTrigger>
 

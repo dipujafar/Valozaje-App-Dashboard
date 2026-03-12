@@ -27,7 +27,6 @@ type TDataType = {
 
 
 export default function RideHistoryTable({ data }: any) {
-    console.log(data)
     const columns: TableProps<TDataType>["columns"] = [
         {
             title: "Name",

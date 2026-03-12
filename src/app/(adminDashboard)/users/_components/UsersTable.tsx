@@ -87,12 +87,12 @@ export default function UsersTable() {
       render: (text, record) => (
         <div className="flex items-center gap-x-2">
           <AntImage
-            src={record.image}
+            src={record?.image}
             alt="user_image"
             width={50}
             height={50}
             className="object-cover rounded-full"
-            fallback="/user_image.png"
+            fallback="/user-avatar.jpg"
           />
           <p>{text}</p>
         </div>

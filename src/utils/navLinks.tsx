@@ -1,7 +1,7 @@
 import { RiDashboardHorizontalFill } from "react-icons/ri";
 import { IoSettingsOutline } from "react-icons/io5";
 import Link from "next/link";
-import { Wallet } from "lucide-react";
+import { QrCode, Wallet } from "lucide-react";
 import { BsPatchCheck, BsPeople } from "react-icons/bs";
 import { TbAlertOctagonFilled } from "react-icons/tb";
 
@@ -31,6 +31,11 @@ export const navLinks = [
     key: "claims",
     icon: <TbAlertOctagonFilled  size={18} />,
     label: <Link href={"/claims"}>Claims</Link>,
+  },
+  {
+    key: "referrals",
+    icon: <QrCode  size={18} />,
+    label: <Link href={"/referrals"}>Referrals</Link>,
   },
 
   {

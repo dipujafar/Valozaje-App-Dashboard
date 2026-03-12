@@ -1,7 +1,6 @@
 "use client";;
 import { Image, Modal } from "antd";
 import { RiCloseLargeLine } from "react-icons/ri";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { useEffect, useState } from "react";
@@ -26,8 +25,6 @@ const ClaimDetailsModal = ({
     useEffect(() => {
         setCurrentData(data)
     }, [data])
-
-
 
     return (
         <Modal
@@ -62,10 +59,10 @@ const ClaimDetailsModal = ({
                             <CardContent className="pt-6">
                                 <p className="mb-3 text-xs font-medium uppercase tracking-wide text-muted-foreground">Reported by</p>
                                 <div className="flex items-center gap-3">
-                                    {currentData?.reporter?.image ? <Image src={imagePreview(currentData?.reporter?.image)} width={48} height={48} alt={`${currentData?.reporter?.fullName} image`} className="rounded-full object-cover"/>: <CustomAvatar text={currentData?.reporter?.fullName?.charAt(0) || "N"} />}
+                                    {currentData?.reporter?.image ? <Image src={imagePreview(currentData?.reporter?.image)} width={48} height={48} alt={`${currentData?.reporter?.fullName} image`} className="rounded-full object-cover" fallback="/user-avatar.jpg" /> : <CustomAvatar text={currentData?.reporter?.fullName?.charAt(0) || "N"} />}
                                     <div className="flex flex-col">
                                         <span className="text-sm font-semibold text-foreground">{currentData?.reporter?.fullName || "N/A"}</span>
-                                        {/* <span className="text-xs text-muted-foreground">{reportedBy.email}</span> */}
+                                        <span className="text-xs text-muted-foreground">{currentData?.reporter?.email || "N/A"}</span>
                                     </div>
                                 </div>
                             </CardContent>
@@ -76,10 +73,10 @@ const ClaimDetailsModal = ({
                             <CardContent className="pt-6">
                                 <p className="mb-3 text-xs font-medium uppercase tracking-wide text-muted-foreground">Against</p>
                                 <div className="flex items-center gap-3">
-                                     {currentData?.reportedUser?.image ? <Image src={imagePreview(currentData?.reportedUser?.image)} width={48} height={48} alt={`${currentData?.reportedUser?.fullName} image`} className="rounded-full object-cover"/>: <CustomAvatar text={currentData?.reportedUser?.fullName?.charAt(0) || "N"} />}
+                                    {currentData?.reportedUser?.image ? <Image src={imagePreview(currentData?.reportedUser?.image)} width={48} height={48} alt={`${currentData?.reportedUser?.fullName} image`} className="rounded-full object-cover"  fallback="/user-avatar.jpg" /> : <CustomAvatar text={currentData?.reportedUser?.fullName?.charAt(0) || "N"} />}
                                     <div className="flex flex-col">
-                                        <span className="text-sm font-semibold text-foreground">{currentData?.reportedUser?.fullName}</span>
-                                        {/* <span className="text-xs text-muted-foreground">{against.email}</span> */}
+                                        <span className="text-sm font-semibold text-foreground">{currentData?.reportedUser?.fullName || "N/A"}</span>
+                                        <span className="text-xs text-muted-foreground">{currentData?.reportedUser?.email || "N/A"}</span>
                                     </div>
                                 </div>
                             </CardContent>
@@ -98,7 +95,7 @@ const ClaimDetailsModal = ({
                     {/* Description Card */}
                     <Card className="border-border/50">
                         <CardContent className="px-6 py-6">
-                            <p className="text-pretty text-sm leading-relaxed text-foreground max-w-2xl">{currentData?.additionalDetails || "N/A" }</p>
+                            <p className="text-pretty text-sm leading-relaxed text-foreground max-w-2xl">{currentData?.additionalDetails || "N/A"}</p>
                         </CardContent>
                     </Card>
                 </div>

@@ -39,7 +39,7 @@ const UserDetails = () => {
                 </div>
 
                 {/* Right Side - Tabs */}
-                <div className="flex-1 min-w-0">
+                {/* <div className="flex-1 min-w-0">
                     <UserDetailsTabs
                         userData={{
                             fullName: userData.fullName,
@@ -51,7 +51,7 @@ const UserDetails = () => {
                             about: userData.about,
                         }}
                     />
-                </div>
+                </div> */}
             </div>
         </div>
     );

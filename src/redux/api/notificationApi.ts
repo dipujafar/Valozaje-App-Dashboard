@@ -11,9 +11,16 @@ const notificationApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.notifications],
     }),
+    deleteNotification: builder.mutation({
+      query: (id) => ({
+        url: `/notifications/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.notifications],
+    }),
   }),
 });
 
-export const { useGetNotificationQuery } = notificationApi;
+export const { useGetNotificationQuery, useDeleteNotificationMutation } = notificationApi;
 
 export default notificationApi;

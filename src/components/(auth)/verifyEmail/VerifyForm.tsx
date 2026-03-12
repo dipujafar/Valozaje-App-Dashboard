@@ -5,14 +5,18 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import LogoSection from "../LogoSection"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useRef, type KeyboardEvent } from "react"
 import { OtpFormValues, otpSchema } from "./schema"
+import { useVerifyOtpMutation } from "@/redux/api/authApi"
+import { Loader2 } from "lucide-react"
+import { toast } from "sonner"
 
 
 
 export function OtpVerificationForm() {
+  const [otp, { isLoading }] = useVerifyOtpMutation();
+  const email = useSearchParams().get("mail");
   const form = useForm<OtpFormValues>({
     resolver: zodResolver(otpSchema),
     defaultValues: {
@@ -73,11 +77,20 @@ export function OtpVerificationForm() {
     }
   }
 
-  const onSubmit = (values: OtpFormValues) => {
-    console.log("OTP submitted:", values);
-     router.push("/reset-password")
-    // Handle OTP verification logic here
-    // router.push("/reset-password");
+  const onSubmit = async (values: OtpFormValues) => {
+    const formattedData = {
+      email: email,
+      otp: values.otp,
+      purpose: "passwordReset"
+    }
+    try {
+      await otp(formattedData).unwrap();
+      toast.success("OTP verified successfully");
+      router.push(`/reset-password?mail=${email}`);
+    } catch {
+      toast.error("Failed to verify otp");
+    }
+
   }
 
   const otpValue = form.watch("otp").padEnd(6, " ")
@@ -106,7 +119,7 @@ export function OtpVerificationForm() {
                   <FormItem>
                     <FormControl>
                       <div className="flex justify-center gap-2">
-                        {[0, 1, 2, 3, 4, 5].map((index) => (
+                        {[0, 1, 2, 3].map((index) => (
                           <Input
                             key={index}
                             ref={(el) => {
@@ -133,8 +146,9 @@ export function OtpVerificationForm() {
               <Button
                 type="submit"
                 className="w-full h-12 bg-main-color hover:bg-green-700 text-white font-medium text-base"
+                disabled={isLoading}
               >
-                Verify Email
+                Verify Email {isLoading && <Loader2 className="animate-spin ml-2" />}
               </Button>
             </form>
           </Form>

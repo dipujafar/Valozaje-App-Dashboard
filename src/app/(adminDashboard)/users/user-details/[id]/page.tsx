@@ -44,8 +44,6 @@ export default function UserDetailsPage() {
 
   const user = apiData.data;
 
-  console.log(user);
-
   // Transform API data using utility function
   const userData = transformUserForDetails(user);
 

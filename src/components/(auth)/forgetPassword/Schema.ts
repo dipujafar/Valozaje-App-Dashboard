@@ -1,6 +1,6 @@
 import * as z from "zod";
 export const forgetPassSchema = z.object({
-  emailOrPhone: z
+  email: z
     .string()
     .min(1, "Email")
     .refine((value) => {

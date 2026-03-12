@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,14 +13,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import LogoSection from "../LogoSection";
-
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ResetPasswordFormValues, resetPasswordSchema } from "./schema";
+import { useResetPasswordMutation } from "@/redux/api/authApi";
+import { toast } from "sonner";
 
 export function ResetPasswordForm() {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [resetPass, { isLoading }] = useResetPasswordMutation();
+  const email = useSearchParams().get("mail");
 
   const form = useForm<ResetPasswordFormValues>({
     resolver: zodResolver(resetPasswordSchema),
@@ -32,19 +33,21 @@ export function ResetPasswordForm() {
   });
   const router = useRouter();
 
-  const onSubmit = (values: ResetPasswordFormValues) => {
-    console.log("Password reset submitted:", values);
+  const onSubmit = async (values: ResetPasswordFormValues) => {
+    const formattedData = { email: email, newPassword: values.newPassword, confirmPassword: values.confirmPassword };
+    try {
+      await resetPass(formattedData).unwrap();
+      toast.success("Password reset successfully");
+      router.push("/login");
+    } catch (error) {
+      console.log(error);
+      // toast.error("Failed to reset password");
+    }
 
-    router.push("/login");
   };
 
   return (
     <div className="h-screen flex flex-col items-center justify-center md:flex-row">
-      {/* Left Side - Purple Gradient with Logo */}
-      {/* <div className="flex-1">
-        <LogoSection />
-      </div> */}
-      {/* Right Side - Reset Password Form */}
       <div className="flex-1 bg-gray-50 max-w-xl mx-auto py-10 rounded-md flex flex-col items-center justify-center px-12">
         <div className="w-full max-w-md space-y-6">
           <div className="text-center space-y-2">

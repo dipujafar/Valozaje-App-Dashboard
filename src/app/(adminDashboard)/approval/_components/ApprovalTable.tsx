@@ -66,8 +66,6 @@ export default function ApprovalTable() {
     search: debouncedSearch || undefined,
   });
 
-  console.log(apiData);
-
   // Reset to page 1 when search changes
   useEffect(() => {
     setPage(1);

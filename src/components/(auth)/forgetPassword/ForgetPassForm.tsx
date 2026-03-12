@@ -12,21 +12,35 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import LogoSection from "../LogoSection";
 import { ForgetPassFormValues, forgetPassSchema } from "./Schema";
 import { useRouter } from "next/navigation";
+import { useForgetPasswordMutation } from "@/redux/api/authApi";
+import { Spin } from "antd";
+import { toast } from "sonner";
 
 export function ForgetPassForm() {
+  const [forgetPass, { isLoading }] = useForgetPasswordMutation();
   const form = useForm<ForgetPassFormValues>({
     resolver: zodResolver(forgetPassSchema),
     defaultValues: {
-      emailOrPhone: "",
+      email: "",
     },
   });
   const router = useRouter();
 
-  const onSubmit = (values: ForgetPassFormValues) => {
-    router.push("/verify-email");
+  const onSubmit = async (values: ForgetPassFormValues) => {
+    const formattedData = {
+      email: values.email,
+      purpose: "passwordReset"
+    }
+
+    try {
+      await forgetPass(formattedData).unwrap();
+      toast.success("Password reset email sent successfully");
+      router.push(`/verify-email?mail=${values.email}`);
+    } catch (error) {
+      toast.error("Failed to reset password");
+    }
   };
 
   return (
@@ -53,7 +67,7 @@ export function ForgetPassForm() {
               {/* Email/Phone Input */}
               <FormField
                 control={form.control}
-                name="emailOrPhone"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-sm font-medium text-gray-700">
@@ -79,8 +93,9 @@ export function ForgetPassForm() {
               <Button
                 type="submit"
                 className="w-full h-12 bg-main-color hover:bg-green-700 text-white font-medium text-base"
+                disabled={isLoading}
               >
-                Send OTP
+                Send OTP {isLoading && <Spin size="small" />}
               </Button>
             </form>
           </Form>

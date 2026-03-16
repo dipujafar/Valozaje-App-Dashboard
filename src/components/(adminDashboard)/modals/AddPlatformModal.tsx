@@ -92,7 +92,7 @@ const AddPlatformModal = ({
                                 <div className="py-2">
                                     <CloudUploadOutlined className="!text-6xl !text-gray-400 mb-3" />
                                     <p className="text-sm text-gray-600">Click to upload or drag and drop</p>
-                                    <p className="text-xs text-gray-400 mt-1">PNG, JPG (max. 8MB)</p>
+                                    <p className="text-xs text-gray-400 mt-1">PNG, JPG </p>
                                 </div>
                             </Dragger>
                         </Form.Item>

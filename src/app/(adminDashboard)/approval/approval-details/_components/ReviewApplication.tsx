@@ -39,6 +39,8 @@ interface ReviewApplicationProps {
   onFinalize: (approvals: Record<string, boolean>) => void;
 }
 
+
+
 export const ReviewApplication = ({
   vehicleData,
   onCancel,

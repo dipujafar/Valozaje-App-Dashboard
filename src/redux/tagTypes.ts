@@ -11,6 +11,7 @@ export const tagTypes = {
   commission: "Commission",
   reports: "Reports",
   platform: "Platform",
+  content: "Content",
 };
 
 export const tagTypesList = [
@@ -25,4 +26,5 @@ export const tagTypesList = [
   tagTypes.commission,
   tagTypes.reports,
   tagTypes.platform,
+  tagTypes.content,
 ];

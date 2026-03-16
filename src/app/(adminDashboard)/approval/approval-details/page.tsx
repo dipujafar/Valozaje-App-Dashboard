@@ -24,11 +24,7 @@ const handleFinalize = (approvals: Record<string, boolean>) => {
 export default function ApprovalDetails() {
     return (
         <>
-            <ReviewApplication
-                vehicleData={vehicleData}
-                onCancel={handleCancel}
-                onFinalize={handleFinalize}
-            />
+
         </>
     )
 }

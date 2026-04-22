@@ -1,0 +1,39 @@
+name: Deploy Frontend
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build
+      - name: Deploy to GCP
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: abirwerks
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # These are the production files required to run Next.js
+          source: ".next,public,package.json,next.config.mjs"
+          target: "/home/abirwerks/Valozaje-App-Dashboard"
+          strip_components: 0 # Keeps the folder structure intact
+          overwrite: true # Ensures files are updated
+      - name: Restart App
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: abirwerks
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/abirwerks/Valozaje-App-Dashboard
+            npm install --production
+            pm2 restart dashboard

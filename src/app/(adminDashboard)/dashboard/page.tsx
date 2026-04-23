@@ -6,7 +6,7 @@ import StatContainer from "./_components/stats/StatContainer";
 
 const DashboardPage = () => {
   return (
-    <div className="lg:space-y-7 space-y-5 ">
+    <div className="lg:space-y-7 space-y-5">
       <StatContainer />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <EarningsChart />
@@ -16,7 +16,6 @@ const DashboardPage = () => {
         <PendingActions />
         <RecentActivity />
       </div>
-      {/*  */}
     </div>
   );
 };

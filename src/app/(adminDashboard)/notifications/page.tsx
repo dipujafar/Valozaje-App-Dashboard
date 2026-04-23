@@ -2,7 +2,9 @@ import NotificationContainer from "@/components/(adminDashboard)/Notifications/N
 
 const NotificationsPage = () => {
   return (
-    <NotificationContainer></NotificationContainer>
+    <>
+      <NotificationContainer></NotificationContainer>
+    </>
   );
 };
 

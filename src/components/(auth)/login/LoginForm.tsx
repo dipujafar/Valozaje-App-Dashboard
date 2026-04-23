@@ -94,7 +94,7 @@ export default function LoginForm() {
             Welcome To Valozaje
           </h1>
           <p className="text-sm text-muted-foreground">
-            Sign in to your account
+            Sign in to your account as an admin
           </p>
         </div>
 
